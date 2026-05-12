@@ -18,7 +18,7 @@ public interface ICatalogRepository
 
     // Product operations
     Task<Product?> GetProductAsync(int id);
-    Task<IEnumerable<Product>> ListProductsAsync();
+    Task<IEnumerable<Product>> ListProductsAsync(int? categoryId, int page, int pageSize);
     Task AddProductAsync(Product product);
     Task UpdateProductAsync(Product product);
     Task DeleteProductAsync(int id);

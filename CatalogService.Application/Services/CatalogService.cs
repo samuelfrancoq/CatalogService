@@ -92,10 +92,18 @@ public class CatalogService : ICatalogService
     }
 
     public async Task DeleteCategoryAsync(int id) => await _repository.DeleteCategoryAsync(id);
-    public async Task<IEnumerable<ProductDto>> ListProductsAsync()
+    public async Task<IEnumerable<ProductDto>> ListProductsAsync(int? categoryId, int page, int pageSize)
     {
-        var products = await _repository.ListProductsAsync();
-        return products.Select(p => new ProductDto { Id = p.Id, Name = p.Name, Price = p.Price, Amount = p.Amount, CategoryId = p.CategoryId });
+        var products = await _repository.ListProductsAsync(categoryId, page, pageSize);
+        // Mapeamos a DTO como ya lo veníamos haciendo
+        return products.Select(p => new ProductDto
+        {
+            Id = p.Id,
+            Name = p.Name,
+            Price = p.Price,
+            Amount = p.Amount,
+            CategoryId = p.CategoryId
+        });
     }
 
     public async Task UpdateProductAsync(ProductDto dto)

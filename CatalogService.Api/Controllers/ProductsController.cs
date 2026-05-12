@@ -1,16 +1,18 @@
-﻿using CatalogService.Application.DTOs;
+﻿using Asp.Versioning;
+using CatalogService.Application.DTOs;
 using CatalogService.Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CatalogService.Api.Controllers
 {
+    [ApiVersion("1.0")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
-    [Route("api/[controller]")]
-    public class ProductController : ControllerBase
+    public class ProductsController : ControllerBase
     {
         private readonly ICatalogService _service;
 
-        public ProductController(ICatalogService service)
+        public ProductsController(ICatalogService service)
         {
             _service = service;
         }
@@ -25,13 +27,12 @@ namespace CatalogService.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll() => Ok(await _service.ListProductsAsync());
-
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Get([FromQuery] int? categoryId, [FromQuery] int page = 1, [FromQuery] int pageSize = 10)
         {
-            await _service.DeleteProductAsync(id);
-            return NoContent();
+            if (page < 1 || pageSize < 1) return BadRequest("Page and pageSize must be greater than 0");
+
+            var products = await _service.ListProductsAsync(categoryId, page, pageSize);
+            return Ok(products);
         }
 
         [HttpGet("{id}")]

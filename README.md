@@ -1,51 +1,121 @@
-# Catalog Service – Clean Architecture
+# Catalog Service – RESTful Web API
 
-This project is an implementation of the Catalog Service following a Clean Architecture approach. The main goal is to ensure that business logic remains fully independent from external concerns such as the database and the API by organizing the solution into separate projects (DLLs).
+This project is an advanced implementation of the **Catalog Service**, following a **Clean Architecture** approach and strictly adhering to **RESTful architectural principles**.
 
-## Architecture Overview
+---
 
-The solution is divided into four physical projects:
+## 🏗️ Architecture & Design
 
-### Domain
-- Represents the core of the application.
-- Contains entities such as `Category` and `Product`.
-- Defines repository interfaces.
-- Has no external dependencies.
+The solution is divided into four main layers:
 
-### Application
-- Contains the business logic of the system.
-- Includes services and Data Transfer Objects (DTOs).
-- Interacts only with the Domain layer.
+- **Domain**
+- **Application**
+- **Infrastructure**
+- **API**
 
-### Infrastructure
-- Handles all technical and external concerns.
-- Implements data access using Entity Framework Core and SQL Server.
-- Uses Fluent API for configuring constraints (e.g., string length limits and data types such as money).
+This ensures complete separation of concerns. In this version, the service has been evolved to meet **high-level maturity standards**.
 
-### API
-- Provides the entry point to the system.
-- Contains controllers and dependency injection configuration.
+---
 
-## Non-Functional Requirements
+## 🔗 REST Implementation & Maturity
+
+### Richardson Maturity Model
+
+- **Level 2**
+  - Implements proper HTTP verbs: `GET`, `POST`, `PUT`, `DELETE`
+  - Uses meaningful HTTP status codes
+
+- **Level 3 (HATEOAS)**
+  - Resources include hypermedia links (`_links`)
+  - Enables client navigation through API state transitions  
+    _Example: a Category resource provides links to its related Products_
+
+### Versioning
+
+- Supports API versioning via URL segments  
+  _Example:_ `/api/v1/`
+
+### OpenAPI (Swagger)
+
+- Fully documented API
+- Separate documentation sets for each API version
+
+---
+
+## 🚀 Key Features
+
+### Advanced Product Catalog
+
+- Support for **categories** and **products**
+- Full **CRUD operations**
+
+### Pagination & Filtering
+
+- Server-side pagination
+- Category-based filtering
+
+### Data Integrity
+
+- Implements **Cascade Delete**
+- Deleting a category automatically removes all associated products
+- Managed via **EF Core Fluent API**
+
+### DTO Mapping
+
+- Decouples internal entities from public-facing contracts
+- Enhanced with **HATEOAS support**
+
+---
+
+## ✅ Non-Functional Requirements (NFR)
 
 ### Testability
-- The Application layer is decoupled from the database.
-- Allows unit testing without requiring a running database.
-- Uses Moq to mock dependencies and verify behavior.
-- Ensures correct mapping between entities and DTOs.
 
-### Extensibility
-- The architecture allows easy replacement of external components.
-- Example: switching from SQL Server to another database (e.g., PostgreSQL or DynamoDB) requires changes only in the Infrastructure layer.
-- The use of DTOs prevents breaking changes in the API when modifying the database schema.
+#### Unit Testing
 
-## Getting Started
+- Comprehensive tests for the **Application layer**
+- Uses **Moq** to validate:
+  - Business logic
+  - Mapping
 
-Follow these steps to run the project locally:
+#### Integration Testing
 
-1. Verify the connection string in `appsettings.json`.
-2. Open the Package Manager Console and set the default project to `Infrastructure`.
+- High-level tests using **WebApplicationFactory**
+- Verifies:
+  - Full API pipeline
+  - Correct HTTP responses
+  - HATEOAS link generation
+
+---
+
+## 📚 Documentation & Standards
+
+### OpenAPI Specification
+
+- Automatic documentation generation using **Swagger**
+- Tailored to reflect:
+  - API versioning
+  - Resource constraints
+
+### Analyzers
+
+- Uses **Web API analyzers**
+- Enforces REST best practices during development
+
+---
+
+## ⚙️ Getting Started
+
+### Database Setup
+
+1. Verify the connection string in `appsettings.json`
+2. Set **Infrastructure** as the default project in Package Manager Console
 3. Run:
-   ```powershell
-   Update-Database
-4. Hit F5 and check out the Swagger UI.
+
+```powershell
+Update-Database
+
+1. Execution: - Run the project (F5).
+Access the Swagger UI at /swagger to explore the different API versions.
+2. Running Tests:
+Use the Test Explorer in Visual Studio to run both Unit and Integration tests to ensure system stability.

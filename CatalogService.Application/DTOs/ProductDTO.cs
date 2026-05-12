@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CatalogService.Application.DTOs
 {
-    public class ProductDto
+    public class ProductDto : ResourceBaseDto
     {
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;

@@ -28,5 +28,11 @@ public class CatalogContext : DbContext
             entity.Property(e => e.Price).HasColumnType("money");
             entity.Property(e => e.Amount).IsRequired();
         });
+
+        modelBuilder.Entity<Product>()
+        .HasOne(p => p.Category)
+        .WithMany(c => c.Products)
+        .HasForeignKey(p => p.CategoryId)
+        .OnDelete(DeleteBehavior.Cascade);
     }
 }

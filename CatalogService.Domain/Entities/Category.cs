@@ -14,5 +14,6 @@ namespace CatalogService.Domain.Entities
         public string? ImageUrl { get; set; }
         public int? ParentCategoryId { get; set; }
         public Category? ParentCategory { get; set; }
+        public virtual ICollection<Product> Products { get; set; } = new List<Product>();
     }
 }

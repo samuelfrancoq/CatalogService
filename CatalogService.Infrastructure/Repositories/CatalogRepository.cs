@@ -51,8 +51,23 @@ public class CatalogRepository : ICatalogRepository
     public async Task<Product?> GetProductAsync(int id) =>
         await _context.Products.Include(p => p.Category).FirstOrDefaultAsync(p => p.Id == id);
 
-    public async Task<IEnumerable<Product>> ListProductsAsync() =>
-        await _context.Products.Include(p => p.Category).ToListAsync();
+    public async Task<IEnumerable<Product>> ListProductsAsync(int? categoryId, int page, int pageSize)
+    {
+        var query = _context.Products.AsQueryable();
+
+        // 1. Filtramos por categoría si viene el ID
+        if (categoryId.HasValue)
+        {
+            query = query.Where(p => p.CategoryId == categoryId.Value);
+        }
+
+        // 2. Aplicamos paginación
+        return await query
+            .OrderBy(p => p.Id) // Importante ordenar antes de hacer Skip/Take
+            .Skip((page - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync();
+    }
 
     public async Task AddProductAsync(Product product)
     {

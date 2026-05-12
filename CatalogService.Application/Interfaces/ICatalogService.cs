@@ -13,7 +13,7 @@ public interface ICatalogService
 
     // Product Service Contracts
     Task<ProductDto?> GetProductAsync(int id);
-    Task<IEnumerable<ProductDto>> ListProductsAsync();
+    Task<IEnumerable<ProductDto>> ListProductsAsync(int? categoryId, int page, int pageSize);
     Task AddProductAsync(ProductDto productDto);
     Task UpdateProductAsync(ProductDto productDto);
     Task DeleteProductAsync(int id);
