@@ -116,7 +116,7 @@ This ensures complete separation of concerns. In this version, the service has b
 Update-Database
 ```
 
-1. Execution: - Run the project (F5).
+4. Execution: - Run the project (F5).
 Access the Swagger UI at /swagger to explore the different API versions.
-2. Running Tests:
+5. Running Tests:
 Use the Test Explorer in Visual Studio to run both Unit and Integration tests to ensure system stability.
