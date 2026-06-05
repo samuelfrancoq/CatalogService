@@ -4,7 +4,7 @@ This project is an advanced implementation of the **Catalog Service**, following
 
 ---
 
-## 🏗️ Architecture & Design
+## Architecture & Design
 
 The solution is divided into four main layers:
 
@@ -17,7 +17,7 @@ This ensures complete separation of concerns. In this version, the service has b
 
 ---
 
-## 🔗 REST Implementation & Maturity
+## REST Implementation & Maturity
 
 ### Richardson Maturity Model
 
@@ -42,7 +42,7 @@ This ensures complete separation of concerns. In this version, the service has b
 
 ---
 
-## 🚀 Key Features
+## Key Features
 
 ### Advanced Product Catalog
 
@@ -67,7 +67,7 @@ This ensures complete separation of concerns. In this version, the service has b
 
 ---
 
-## ✅ Non-Functional Requirements (NFR)
+## Non-Functional Requirements (NFR)
 
 ### Testability
 
@@ -88,7 +88,7 @@ This ensures complete separation of concerns. In this version, the service has b
 
 ---
 
-## 📚 Documentation & Standards
+## Documentation & Standards
 
 ### OpenAPI Specification
 
@@ -104,7 +104,7 @@ This ensures complete separation of concerns. In this version, the service has b
 
 ---
 
-## ⚙️ Getting Started
+## Getting Started
 
 ### Database Setup
 
@@ -114,8 +114,9 @@ This ensures complete separation of concerns. In this version, the service has b
 
 ```powershell
 Update-Database
+```
 
-1. Execution: - Run the project (F5).
+4. Execution: - Run the project (F5).
 Access the Swagger UI at /swagger to explore the different API versions.
-2. Running Tests:
+5. Running Tests:
 Use the Test Explorer in Visual Studio to run both Unit and Integration tests to ensure system stability.
