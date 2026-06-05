@@ -7,16 +7,21 @@ using CatalogService.Application.DTOs;
 using CatalogService.Application.Interfaces;
 using CatalogService.Domain.Entities;
 using CatalogService.Domain.Interfaces;
+using MassTransit; // Added for Message Broker support
+using Shared.Contracts;
 
 namespace CatalogService.Application.Services;
 
 public class CatalogService : ICatalogService
 {
     private readonly ICatalogRepository _repository;
+    private readonly IPublishEndpoint _publishEndpoint; // Added for MassTransit
 
-    public CatalogService(ICatalogRepository repository)
+    // Updated constructor to inject MassTransit alongside your real repository
+    public CatalogService(ICatalogRepository repository, IPublishEndpoint publishEndpoint)
     {
         _repository = repository;
+        _publishEndpoint = publishEndpoint;
     }
 
     public async Task<CategoryDto?> GetCategoryAsync(int id)
@@ -95,7 +100,6 @@ public class CatalogService : ICatalogService
     public async Task<IEnumerable<ProductDto>> ListProductsAsync(int? categoryId, int page, int pageSize)
     {
         var products = await _repository.ListProductsAsync(categoryId, page, pageSize);
-        // Mapeamos a DTO como ya lo veníamos haciendo
         return products.Select(p => new ProductDto
         {
             Id = p.Id,
@@ -108,8 +112,24 @@ public class CatalogService : ICatalogService
 
     public async Task UpdateProductAsync(ProductDto dto)
     {
-        var product = new Product { Id = dto.Id, Name = dto.Name, Price = dto.Price, Amount = dto.Amount, CategoryId = dto.CategoryId };
+        var product = await _repository.GetProductAsync(dto.Id);
+        if (product == null)
+            throw new KeyNotFoundException($"Product with ID {dto.Id} was not found in the database.");
+
+        product.Name = dto.Name;
+        product.Price = dto.Price;
+        product.Amount = dto.Amount;
+        product.CategoryId = dto.CategoryId;
+        if (dto.Description != null) product.Description = dto.Description;
+
         await _repository.UpdateProductAsync(product);
+
+        await _publishEndpoint.Publish<ProductUpdatedEvent>(new ProductUpdatedEvent
+        {
+            ProductId = product.Id,
+            NewName = product.Name,
+            NewPrice = product.Price
+        });
     }
 
     public async Task DeleteProductAsync(int id) => await _repository.DeleteProductAsync(id);

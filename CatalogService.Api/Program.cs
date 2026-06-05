@@ -6,6 +6,7 @@ using CatalogService.Infrastructure.Persistence;
 using CatalogService.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System.Runtime.CompilerServices;
+using MassTransit;
 [assembly: InternalsVisibleTo("CatalogService.Api.IntegrationTests")]
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,6 +14,19 @@ var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("CatalogServiceConnection");
 builder.Services.AddDbContext<CatalogContext>(options =>
     options.UseSqlServer(connectionString));
+
+builder.Services.AddMassTransit(x =>
+{
+    x.UsingRabbitMq((context, cfg) =>
+    {
+        // Se conecta al localhost nativo de Windows usando las credenciales por defecto
+        cfg.Host("localhost", "/", h =>
+        {
+            h.Username("guest");
+            h.Password("guest");
+        });
+    });
+});
 
 // Registering the Repository (Infrastructure)
 builder.Services.AddScoped<ICatalogRepository, CatalogRepository>();
