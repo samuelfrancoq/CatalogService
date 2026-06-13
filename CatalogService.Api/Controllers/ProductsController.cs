@@ -1,6 +1,7 @@
 ﻿using Asp.Versioning;
 using CatalogService.Application.DTOs;
 using CatalogService.Application.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CatalogService.Api.Controllers
@@ -18,6 +19,7 @@ namespace CatalogService.Api.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Manager")]
         public async Task<IActionResult> Create([FromBody] ProductDto dto)
         {
             // Ensure amount is positive
@@ -44,6 +46,7 @@ namespace CatalogService.Api.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = "Manager")]
         public async Task<IActionResult> Update(int id, [FromBody] ProductDto dto)
         {
             if (id != dto.Id) return BadRequest("ID mismatch");

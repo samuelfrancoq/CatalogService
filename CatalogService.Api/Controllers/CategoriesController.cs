@@ -1,6 +1,7 @@
 ﻿using Asp.Versioning;
 using CatalogService.Application.DTOs;
 using CatalogService.Application.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CatalogService.Api.Controllers;
@@ -32,6 +33,7 @@ public class CategoriesController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize(Roles = "Manager")]
     public async Task<IActionResult> Create([FromBody] CategoryDto dto)
     {
         // Validates and adds a new category

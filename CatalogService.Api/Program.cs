@@ -1,12 +1,16 @@
+using System.Runtime.CompilerServices;
+using System.Text;
 using Asp.Versioning;
 using CatalogService.Application.Interfaces;
 using CatalogService.Application.Services;
 using CatalogService.Domain.Interfaces;
 using CatalogService.Infrastructure.Persistence;
 using CatalogService.Infrastructure.Repositories;
-using Microsoft.EntityFrameworkCore;
-using System.Runtime.CompilerServices;
 using MassTransit;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 [assembly: InternalsVisibleTo("CatalogService.Api.IntegrationTests")]
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,7 +23,6 @@ builder.Services.AddMassTransit(x =>
 {
     x.UsingRabbitMq((context, cfg) =>
     {
-        // Se conecta al localhost nativo de Windows usando las credenciales por defecto
         cfg.Host("localhost", "/", h =>
         {
             h.Username("guest");
@@ -34,6 +37,34 @@ builder.Services.AddScoped<ICatalogRepository, CatalogRepository>();
 // Registering the Service (Application)
 builder.Services.AddScoped<ICatalogService, CatalogService.Application.Services.CatalogService>();
 
+// Authentication JWT
+var jwtSettings = builder.Configuration.GetSection("JWT");
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = jwtSettings["ValidIssuer"],
+        ValidAudience = jwtSettings["ValidAudience"],
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["Secret"]))
+    };
+});
+
+// Register authorization policies based on roles and claims
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("ManagerOnly", policy => policy.RequireRole("Manager"));
+});
+
+
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
@@ -43,6 +74,31 @@ builder.Services.AddSwaggerGen(options =>
         Title = "Catalog API v1",
         Version = "v1",
         Description = "REST - Task 1"
+    });
+
+    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = "Bearer",
+        BearerFormat = "JWT",
+        In = ParameterLocation.Header,
+        Description = "Please enter the JWT token: Bearer {your_token_here}"
+    });
+
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            Array.Empty<string>()
+        }
     });
 });
 
@@ -70,6 +126,8 @@ if (app.Environment.IsDevelopment())
     });
 }
 
+app.UseRouting();
+app.UseAuthentication();
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
