@@ -20,11 +20,11 @@ namespace CatalogService.Api.Controllers
 
         [HttpPost]
         [Authorize(Roles = "Manager")]
-        public async Task<IActionResult> Create([FromBody] ProductDto dto)
+        public async Task<IActionResult> Create([FromBody] ProductDto productDto)
         {
             // Ensure amount is positive
-            if (dto.Amount < 0) return BadRequest("Amount must be a positive integer.");
-            await _service.AddProductAsync(dto);
+            if (productDto.Amount < 0) return BadRequest("Amount must be a positive integer.");
+            await _service.AddProductAsync(productDto);
             return Ok();
         }
 
@@ -47,10 +47,10 @@ namespace CatalogService.Api.Controllers
 
         [HttpPut("{id}")]
         [Authorize(Roles = "Manager")]
-        public async Task<IActionResult> Update(int id, [FromBody] ProductDto dto)
+        public async Task<IActionResult> Update(int id, [FromBody] ProductDto productDto)
         {
-            if (id != dto.Id) return BadRequest("ID mismatch");
-            await _service.UpdateProductAsync(dto);
+            if (id != productDto.Id) return BadRequest("ID mismatch");
+            await _service.UpdateProductAsync(productDto);
             return NoContent();
         }
     }

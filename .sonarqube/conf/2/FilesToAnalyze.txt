@@ -1,0 +1,5 @@
+﻿C:\DevPersonal\CatalogService\CatalogService.Infrastructure\Migrations\20260511174119_InitialCreate.cs
+C:\DevPersonal\CatalogService\CatalogService.Infrastructure\Migrations\20260511174119_InitialCreate.Designer.cs
+C:\DevPersonal\CatalogService\CatalogService.Infrastructure\Migrations\CatalogContextModelSnapshot.cs
+C:\DevPersonal\CatalogService\CatalogService.Infrastructure\Persistence\CatalogContext.cs
+C:\DevPersonal\CatalogService\CatalogService.Infrastructure\Repositories\CatalogRepository.cs

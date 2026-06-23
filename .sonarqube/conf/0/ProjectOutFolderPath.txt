@@ -1,0 +1,1 @@
+C:\DevPersonal\CatalogService\.sonarqube\out\0

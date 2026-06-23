@@ -1,0 +1,11 @@
+﻿C:\DevPersonal\CatalogService\CatalogService.Api\Controllers\CategoriesController.cs
+C:\DevPersonal\CatalogService\CatalogService.Api\Controllers\ProductsController.cs
+C:\DevPersonal\CatalogService\CatalogService.Api\Program.cs
+C:\DevPersonal\CatalogService\CatalogService.Api\obj\Debug\net8.0\CatalogService.Api.GlobalUsings.g.cs
+C:\DevPersonal\CatalogService\CatalogService.Api\obj\Debug\net8.0\.NETCoreApp,Version=v8.0.AssemblyAttributes.cs
+C:\DevPersonal\CatalogService\CatalogService.Api\obj\Debug\net8.0\CatalogService.Api.AssemblyInfo.cs
+C:\DevPersonal\CatalogService\CatalogService.Api\obj\Debug\net8.0\CatalogService.Api.MvcApplicationPartsAssemblyInfo.cs
+C:\DevPersonal\CatalogService\CatalogService.Api\appsettings.Development.json
+C:\DevPersonal\CatalogService\CatalogService.Api\appsettings.json
+C:\DevPersonal\CatalogService\CatalogService.Api\CatalogService.Api.http
+C:\DevPersonal\CatalogService\CatalogService.Api\Properties\launchSettings.json

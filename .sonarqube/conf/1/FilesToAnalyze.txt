@@ -1,0 +1,6 @@
+﻿C:\DevPersonal\CatalogService\CatalogService.Application\DTOs\CategoryDTO.cs
+C:\DevPersonal\CatalogService\CatalogService.Application\DTOs\LinkDto.cs
+C:\DevPersonal\CatalogService\CatalogService.Application\DTOs\ProductDTO.cs
+C:\DevPersonal\CatalogService\CatalogService.Application\DTOs\ResourceBaseDto.cs
+C:\DevPersonal\CatalogService\CatalogService.Application\Interfaces\ICatalogService.cs
+C:\DevPersonal\CatalogService\CatalogService.Application\Services\CatalogService.cs

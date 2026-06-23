@@ -50,13 +50,13 @@ public class CatalogService : ICatalogService
         });
     }
 
-    public async Task AddCategoryAsync(CategoryDto dto)
+    public async Task AddCategoryAsync(CategoryDto categoryDto)
     {
         var category = new Category
         {
-            Name = dto.Name,
-            ImageUrl = dto.ImageUrl,
-            ParentCategoryId = dto.ParentCategoryId
+            Name = categoryDto.Name,
+            ImageUrl = categoryDto.ImageUrl,
+            ParentCategoryId = categoryDto.ParentCategoryId
         };
         await _repository.AddCategoryAsync(category);
     }
@@ -77,22 +77,22 @@ public class CatalogService : ICatalogService
         };
     }
 
-    public async Task AddProductAsync(ProductDto dto)
+    public async Task AddProductAsync(ProductDto productDto)
     {
         var product = new Product
         {
-            Name = dto.Name,
-            Description = dto.Description,
-            Price = dto.Price,
-            Amount = dto.Amount,
-            CategoryId = dto.CategoryId
+            Name = productDto.Name,
+            Description = productDto.Description,
+            Price = productDto.Price,
+            Amount = productDto.Amount,
+            CategoryId = productDto.CategoryId
         };
         await _repository.AddProductAsync(product);
     }
 
-    public async Task UpdateCategoryAsync(CategoryDto dto)
+    public async Task UpdateCategoryAsync(CategoryDto categoryDto)
     {
-        var category = new Category { Id = dto.Id, Name = dto.Name, ImageUrl = dto.ImageUrl, ParentCategoryId = dto.ParentCategoryId };
+        var category = new Category { Id = categoryDto.Id, Name = categoryDto.Name, ImageUrl = categoryDto.ImageUrl, ParentCategoryId = categoryDto.ParentCategoryId };
         await _repository.UpdateCategoryAsync(category);
     }
 
@@ -110,17 +110,17 @@ public class CatalogService : ICatalogService
         });
     }
 
-    public async Task UpdateProductAsync(ProductDto dto)
+    public async Task UpdateProductAsync(ProductDto productDto)
     {
-        var product = await _repository.GetProductAsync(dto.Id);
+        var product = await _repository.GetProductAsync(productDto.Id);
         if (product == null)
-            throw new KeyNotFoundException($"Product with ID {dto.Id} was not found in the database.");
+            throw new KeyNotFoundException($"Product with ID {productDto.Id} was not found in the database.");
 
-        product.Name = dto.Name;
-        product.Price = dto.Price;
-        product.Amount = dto.Amount;
-        product.CategoryId = dto.CategoryId;
-        if (dto.Description != null) product.Description = dto.Description;
+        product.Name = productDto.Name;
+        product.Price = productDto.Price;
+        product.Amount = productDto.Amount;
+        product.CategoryId = productDto.CategoryId;
+        if (productDto.Description != null) product.Description = productDto.Description;
 
         await _repository.UpdateProductAsync(product);
 

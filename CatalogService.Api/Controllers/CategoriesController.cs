@@ -34,11 +34,11 @@ public class CategoriesController : ControllerBase
 
     [HttpPost]
     [Authorize(Roles = "Manager")]
-    public async Task<IActionResult> Create([FromBody] CategoryDto dto)
+    public async Task<IActionResult> Create([FromBody] CategoryDto categoryDto)
     {
         // Validates and adds a new category
         if (!ModelState.IsValid) return BadRequest(ModelState);
-        await _service.AddCategoryAsync(dto);
+        await _service.AddCategoryAsync(categoryDto);
         return Ok();
     }
 }

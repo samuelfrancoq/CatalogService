@@ -1,0 +1,4 @@
+﻿C:\DevPersonal\CatalogService\CatalogService.Domain\Entities\Category.cs
+C:\DevPersonal\CatalogService\CatalogService.Domain\Entities\Product.cs
+C:\DevPersonal\CatalogService\CatalogService.Domain\Entities\ProductUpdatedEvent.cs
+C:\DevPersonal\CatalogService\CatalogService.Domain\Interfaces\ICatalogRepository.cs
