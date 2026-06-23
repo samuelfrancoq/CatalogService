@@ -27,7 +27,9 @@ public class CatalogService : ICatalogService
     public async Task<CategoryDto?> GetCategoryAsync(int id)
     {
         var category = await _repository.GetCategoryAsync(id);
-        if (category == null) return null;
+        if (category == null) { 
+            return null;
+        }
 
         return new CategoryDto
         {
@@ -64,7 +66,9 @@ public class CatalogService : ICatalogService
     public async Task<ProductDto?> GetProductAsync(int id)
     {
         var p = await _repository.GetProductAsync(id);
-        if (p == null) return null;
+        if (p == null) {
+            return null;
+        }
 
         return new ProductDto
         {
@@ -112,10 +116,7 @@ public class CatalogService : ICatalogService
 
     public async Task UpdateProductAsync(ProductDto productDto)
     {
-        var product = await _repository.GetProductAsync(productDto.Id);
-        if (product == null)
-            throw new KeyNotFoundException($"Product with ID {productDto.Id} was not found in the database.");
-
+        var product = await _repository.GetProductAsync(productDto.Id) ?? throw new KeyNotFoundException($"Product with ID {productDto.Id} was not found in the database.");
         product.Name = productDto.Name;
         product.Price = productDto.Price;
         product.Amount = productDto.Amount;

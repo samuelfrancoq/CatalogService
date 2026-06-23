@@ -23,7 +23,10 @@ namespace CatalogService.Api.Controllers
         public async Task<IActionResult> Create([FromBody] ProductDto productDto)
         {
             // Ensure amount is positive
-            if (productDto.Amount < 0) return BadRequest("Amount must be a positive integer.");
+            if (productDto.Amount < 0) 
+            {
+                return BadRequest("Amount must be a positive integer.");
+            }
             await _service.AddProductAsync(productDto);
             return Ok();
         }
@@ -41,7 +44,10 @@ namespace CatalogService.Api.Controllers
         public async Task<IActionResult> GetById(int id)
         {
             var product = await _service.GetProductAsync(id);
-            if (product == null) return NotFound();
+            if (product == null) 
+            {
+                return NotFound();
+            }
             return Ok(product);
         }
 
@@ -49,7 +55,10 @@ namespace CatalogService.Api.Controllers
         [Authorize(Roles = "Manager")]
         public async Task<IActionResult> Update(int id, [FromBody] ProductDto productDto)
         {
-            if (id != productDto.Id) return BadRequest("ID mismatch");
+            if (id != productDto.Id) 
+            {
+                return BadRequest("ID mismatch");
+            }
             await _service.UpdateProductAsync(productDto);
             return NoContent();
         }

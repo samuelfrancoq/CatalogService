@@ -22,7 +22,10 @@ public class CategoriesController : ControllerBase
     public async Task<IActionResult> Get(int id)
     {
         var category = await _service.GetCategoryAsync(id);
-        if (category == null) return NotFound();
+        if (category == null)
+        {
+            return NotFound();
+        }
 
         category.Links.Add(new LinkDto(Url.Link("GetCategory", new { id })!, "self", "GET"));
         category.Links.Add(new LinkDto(Url.Link("UpdateCategory", new { id })!, "update_category", "PUT"));
@@ -37,7 +40,10 @@ public class CategoriesController : ControllerBase
     public async Task<IActionResult> Create([FromBody] CategoryDto categoryDto)
     {
         // Validates and adds a new category
-        if (!ModelState.IsValid) return BadRequest(ModelState);
+        if (!ModelState.IsValid) 
+        {
+            return BadRequest(ModelState);
+        }
         await _service.AddCategoryAsync(categoryDto);
         return Ok();
     }
