@@ -18,12 +18,14 @@ public class CatalogContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         // Constraints for Category
-        modelBuilder.Entity<Category>(entity => {
+        modelBuilder.Entity<Category>(entity =>
+        {
             entity.Property(e => e.Name).IsRequired().HasMaxLength(50);
         });
 
         // Constraints for Product
-        modelBuilder.Entity<Product>(entity => {
+        modelBuilder.Entity<Product>(entity =>
+        {
             entity.Property(e => e.Name).IsRequired().HasMaxLength(50);
             entity.Property(e => e.Price).HasColumnType("money");
             entity.Property(e => e.Amount).IsRequired();

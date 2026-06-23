@@ -18,7 +18,7 @@ public class CategoriesController : ControllerBase
         _service = service;
     }
 
-    [HttpGet("{id}", Name = "GetCategory")] 
+    [HttpGet("{id}", Name = "GetCategory")]
     public async Task<IActionResult> Get(int id)
     {
         var category = await _service.GetCategoryAsync(id);
@@ -40,7 +40,7 @@ public class CategoriesController : ControllerBase
     public async Task<IActionResult> Create([FromBody] CategoryDto categoryDto)
     {
         // Validates and adds a new category
-        if (!ModelState.IsValid) 
+        if (!ModelState.IsValid)
         {
             return BadRequest(ModelState);
         }

@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Moq;
-using FluentAssertions;
 using CatalogService.Application.Services;
-using CatalogService.Domain.Interfaces;
 using CatalogService.Domain.Entities;
+using CatalogService.Domain.Interfaces;
+using FluentAssertions;
+using Moq;
 using Xunit;
 
 namespace CatalogService.Application.UnitTests;

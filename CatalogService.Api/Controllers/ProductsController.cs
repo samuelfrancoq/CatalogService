@@ -23,7 +23,7 @@ namespace CatalogService.Api.Controllers
         public async Task<IActionResult> Create([FromBody] ProductDto productDto)
         {
             // Ensure amount is positive
-            if (productDto.Amount < 0) 
+            if (productDto.Amount < 0)
             {
                 return BadRequest("Amount must be a positive integer.");
             }
@@ -34,7 +34,10 @@ namespace CatalogService.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> Get([FromQuery] int? categoryId, [FromQuery] int page = 1, [FromQuery] int pageSize = 10)
         {
-            if (page < 1 || pageSize < 1) return BadRequest("Page and pageSize must be greater than 0");
+            if (page < 1 || pageSize < 1)
+            {
+                return BadRequest("Page and pageSize must be greater than 0");
+            }
 
             var products = await _service.ListProductsAsync(categoryId, page, pageSize);
             return Ok(products);
@@ -44,7 +47,7 @@ namespace CatalogService.Api.Controllers
         public async Task<IActionResult> GetById(int id)
         {
             var product = await _service.GetProductAsync(id);
-            if (product == null) 
+            if (product == null)
             {
                 return NotFound();
             }
@@ -55,7 +58,7 @@ namespace CatalogService.Api.Controllers
         [Authorize(Roles = "Manager")]
         public async Task<IActionResult> Update(int id, [FromBody] ProductDto productDto)
         {
-            if (id != productDto.Id) 
+            if (id != productDto.Id)
             {
                 return BadRequest("ID mismatch");
             }

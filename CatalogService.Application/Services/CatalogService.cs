@@ -27,7 +27,8 @@ public class CatalogService : ICatalogService
     public async Task<CategoryDto?> GetCategoryAsync(int id)
     {
         var category = await _repository.GetCategoryAsync(id);
-        if (category == null) { 
+        if (category == null)
+        {
             return null;
         }
 
@@ -66,7 +67,8 @@ public class CatalogService : ICatalogService
     public async Task<ProductDto?> GetProductAsync(int id)
     {
         var p = await _repository.GetProductAsync(id);
-        if (p == null) {
+        if (p == null)
+        {
             return null;
         }
 
@@ -121,7 +123,10 @@ public class CatalogService : ICatalogService
         product.Price = productDto.Price;
         product.Amount = productDto.Amount;
         product.CategoryId = productDto.CategoryId;
-        if (productDto.Description != null) product.Description = productDto.Description;
+        if (productDto.Description != null)
+        {
+            product.Description = productDto.Description;
+        }
 
         await _repository.UpdateProductAsync(product);
 
