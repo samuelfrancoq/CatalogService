@@ -5,16 +5,16 @@ namespace CatalogService.Application.Interfaces;
 public interface ICatalogService
 {
     // Category Service Contracts
-    Task<CategoryDto?> GetCategoryAsync(int id);
-    Task<IEnumerable<CategoryDto>> ListCategoriesAsync();
-    Task AddCategoryAsync(CategoryDto categoryDto);
-    Task UpdateCategoryAsync(CategoryDto categoryDto);
-    Task DeleteCategoryAsync(int id);
+    public Task<CategoryDto?> GetCategoryAsync(int id);
+    public Task<IEnumerable<CategoryDto>> ListCategoriesAsync();
+    public Task AddCategoryAsync(CategoryDto categoryDto);
+    public Task UpdateCategoryAsync(CategoryDto categoryDto);
+    public Task DeleteCategoryAsync(int id);
 
     // Product Service Contracts
-    Task<ProductDto?> GetProductAsync(int id);
-    Task<IEnumerable<ProductDto>> ListProductsAsync(int? categoryId, int page, int pageSize);
-    Task AddProductAsync(ProductDto productDto);
-    Task UpdateProductAsync(ProductDto productDto);
-    Task DeleteProductAsync(int id);
+    public Task<ProductDto?> GetProductAsync(int id);
+    public Task<IEnumerable<ProductDto>> ListProductsAsync(int? categoryId, int page, int pageSize);
+    public Task AddProductAsync(ProductDto productDto);
+    public Task UpdateProductAsync(ProductDto productDto);
+    public Task DeleteProductAsync(int id);
 }

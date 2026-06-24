@@ -10,16 +10,16 @@ namespace CatalogService.Domain.Interfaces;
 public interface ICatalogRepository
 {
     // Category operations
-    Task<Category?> GetCategoryAsync(int id);
-    Task<IEnumerable<Category>> ListCategoriesAsync();
-    Task AddCategoryAsync(Category category);
-    Task UpdateCategoryAsync(Category category);
-    Task DeleteCategoryAsync(int id);
+    public Task<Category?> GetCategoryAsync(int id);
+    public Task<IEnumerable<Category>> ListCategoriesAsync();
+    public Task AddCategoryAsync(Category category);
+    public Task UpdateCategoryAsync(Category category);
+    public Task DeleteCategoryAsync(int id);
 
     // Product operations
-    Task<Product?> GetProductAsync(int id);
-    Task<IEnumerable<Product>> ListProductsAsync(int? categoryId, int page, int pageSize);
-    Task AddProductAsync(Product product);
-    Task UpdateProductAsync(Product product);
-    Task DeleteProductAsync(int id);
+    public Task<Product?> GetProductAsync(int id);
+    public Task<IEnumerable<Product>> ListProductsAsync(int? categoryId, int page, int pageSize);
+    public Task AddProductAsync(Product product);
+    public Task UpdateProductAsync(Product product);
+    public Task DeleteProductAsync(int id);
 }
